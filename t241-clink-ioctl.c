@@ -932,11 +932,11 @@ static int setup_tc_ioctl(struct tegra_nvlink_dev *tdev, void *ioctl_struct)
 		break;
 
 	case READ_TC:
-		args = MINION_NVLINK_DL_STAT_ARGS_TC_TX;
 		ulong_cmask = cmask;
 		for_each_set_bit(counter, &ulong_cmask, 4) {
 			setup_tc->tx_counter[counter] = 0;
-			args |= MINION_NVLINK_DL_STAT_ARGS_TC_COUNTER(counter);
+			args = MINION_NVLINK_DL_STAT_ARGS_TC_TX |
+				MINION_NVLINK_DL_STAT_ARGS_TC_COUNTER(counter);
 
 			// DEBUG_TP_CNTR_CAPTURE_LO for TX
 			ret = minion_send_dlstat(tdev, setup_tc->socket_id,
@@ -962,10 +962,10 @@ static int setup_tc_ioctl(struct tegra_nvlink_dev *tdev, void *ioctl_struct)
 					(((u64) 0xffffffff & reg_hi) << 32);
 			}
 		}
-		args = MINION_NVLINK_DL_STAT_ARGS_TC_RX;
 		for_each_set_bit(counter, &ulong_cmask, 4) {
 			setup_tc->rx_counter[counter] = 0;
-			args |= MINION_NVLINK_DL_STAT_ARGS_TC_COUNTER(counter);
+			args = MINION_NVLINK_DL_STAT_ARGS_TC_RX |
+				MINION_NVLINK_DL_STAT_ARGS_TC_COUNTER(counter);
 
 			// DEBUG_TP_CNTR_CAPTURE_LO for RX
 			ret = minion_send_dlstat(tdev, setup_tc->socket_id,
