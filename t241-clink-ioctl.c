@@ -1442,7 +1442,6 @@ cleanup:
 
 static int t241_nvlink_dev_open(struct inode *in, struct file *filp)
 {
-	int ret = 0;
 	unsigned int minor = iminor(in);
 	struct tegra_nvlink_dev *tdev = container_of(in->i_cdev,
 					struct tegra_nvlink_dev,
@@ -1455,7 +1454,7 @@ static int t241_nvlink_dev_open(struct inode *in, struct file *filp)
 
 	filp->private_data = tdev;
 
-	return ret;
+	return 0;
 }
 
 static ssize_t t241_nvlink_dev_read(struct file *file,
