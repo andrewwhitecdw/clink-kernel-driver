@@ -1397,7 +1397,7 @@ static long t241_nvlink_dev_ioctl(struct file *file, unsigned int cmd,
 	}
 
 	/* Only allocate a buffer if the IOCTL needs a buffer */
-	if (!(ioc_dir & _IOC_NONE)) {
+	if (ioc_dir != _IOC_NONE) {
 		arg_copy = devm_kzalloc(tdev->dev, arg_size, GFP_KERNEL);
 		if (!arg_copy) {
 			ret = -ENOMEM;
